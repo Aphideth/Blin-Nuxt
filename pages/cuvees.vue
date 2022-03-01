@@ -1,15 +1,47 @@
 <template>
   <div>
+    <!-- carousel -->
     <v-carousel v-model="model">
       <v-carousel-item v-for="(article, i) in articles" :key="i">
-        <v-sheet height="100%" tile>
+        <v-sheet height="100%" width="300px" tile>
           <v-row class="fill-height" align="center" justify="center">
             <div class="text-h2">
               <h5 align="center">{{ article.name }}</h5>
               <div align="center">
                 <img :src="article.image" width="250px" align="center" />
               </div>
-              <p class="text-description">{{ article.description }}</p>
+              <!-- modal -->
+              <v-row justify="space-around">
+                <v-col cols="auto">
+                  <v-dialog transition="dialog-top-transition" max-width="600">
+                    <template #activator="{ on, attrs }">
+                      <v-btn color="primary" v-bind="attrs" v-on="on"
+                        >Infos</v-btn
+                      >
+                    </template>
+                    <template #default="dialog">
+                      <v-card>
+                        <v-toolbar color="primary" dark>{{
+                          article.name
+                        }}</v-toolbar>
+                        <v-card-text>
+                          <div>
+                            <p class="pa-12">
+                              {{ article.description }}
+                            </p>
+                            <img :src="article.composition" width="100px" />
+                          </div>
+                        </v-card-text>
+                        <v-card-actions class="justify-end">
+                          <v-btn text @click="dialog.value = false"
+                            >Close</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </v-row>
             </div>
           </v-row>
         </v-sheet>
@@ -21,13 +53,41 @@
         <h1>Nos Cuvées</h1>
       </v-flex>
       <v-flex v-for="(article, index) in articles" :key="index">
-        <v-card class="mx-auto" max-width="350" pb-3>
+        <v-card class="mx-auto" max-width="350">
+          <v-card-title> {{ article.name }} </v-card-title>
           <img :src="article.image" width="200px" />
           <!-- <img :src="article.composition" width="200px" /> -->
-          <v-card-title> {{ article.name }} </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
-            {{ article.description }}
+            <v-row justify="space-around">
+              <v-col cols="auto">
+                <v-dialog transition="dialog-top-transition" max-width="600">
+                  <template #activator="{ on, attrs }">
+                    <v-btn color="primary" v-bind="attrs" v-on="on"
+                      >Infos</v-btn
+                    >
+                  </template>
+                  <template #default="dialog">
+                    <v-card>
+                      <v-toolbar color="primary" dark>{{
+                        article.name
+                      }}</v-toolbar>
+                      <v-card-text>
+                        <div>
+                          <p class="pa-12">
+                            {{ article.description }}
+                          </p>
+                          <img :src="article.composition" width="100px" />
+                        </div>
+                      </v-card-text>
+                      <v-card-actions class="justify-end">
+                        <v-btn text @click="dialog.value = false">Close</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+                </v-dialog>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-flex>
